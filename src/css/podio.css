@@ -1,0 +1,673 @@
+/* ==========================================================================
+   ESTILOS PREMIUM - PODIO DE LOS MEJORES CICLISTAS DEL MUNDO
+   ========================================================================== */
+
+:root {
+  --bg-primary: #0a0d14;
+  --bg-secondary: #121826;
+  --bg-card: rgba(22, 30, 46, 0.75);
+  --bg-card-hover: rgba(28, 39, 61, 0.9);
+  
+  --gold-primary: #f59e0b;
+  --gold-glow: rgba(245, 158, 11, 0.45);
+  --gold-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+  
+  --silver-primary: #94a3b8;
+  --silver-glow: rgba(148, 163, 184, 0.35);
+  --silver-gradient: linear-gradient(135deg, #e2e8f0 0%, #64748b 100%);
+  
+  --bronze-primary: #b45309;
+  --bronze-glow: rgba(180, 83, 9, 0.35);
+  --bronze-gradient: linear-gradient(135deg, #f97316 0%, #9a3412 100%);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-accent: #38bdf8;
+  
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-bright: rgba(255, 255, 255, 0.2);
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  
+  --shadow-main: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+  --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 20% 90%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+    linear-gradient(to bottom, #07090e, #0d121c);
+}
+
+/* Patrón sutil deportivo de fondo */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ==========================================================================
+   CABECERA
+   ========================================================================== */
+.header {
+  text-align: center;
+  max-width: 800px;
+  margin-bottom: 50px;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--text-accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.header h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header h1 span {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   ESTRUCTURA DEL PODIO (ORDEN VISUAL: 2º - 1º - 3º)
+   ========================================================================== */
+.podium-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 24px;
+  margin-top: 30px;
+  margin-bottom: 60px;
+  perspective: 1000px;
+}
+
+.podium-column {
+  flex: 1;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: var(--transition);
+}
+
+/* Colores y elevaciones según posición */
+.podium-column.first-place {
+  order: 2;
+  z-index: 3;
+}
+
+.podium-column.second-place {
+  order: 1;
+  z-index: 2;
+}
+
+.podium-column.third-place {
+  order: 3;
+  z-index: 1;
+}
+
+/* Tarjeta de Ciclista */
+.cyclist-card {
+  width: 100%;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-main);
+  transition: var(--transition);
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.cyclist-card:hover {
+  transform: translateY(-8px);
+  background: var(--bg-card-hover);
+  border-color: var(--border-glass-bright);
+}
+
+/* Insignia de Posición */
+.rank-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.first-place .rank-badge {
+  background: var(--gold-gradient);
+  color: #552702;
+  box-shadow: 0 0 25px var(--gold-glow);
+}
+
+.second-place .rank-badge {
+  background: var(--silver-gradient);
+  color: #0f172a;
+  box-shadow: 0 0 20px var(--silver-glow);
+}
+
+.third-place .rank-badge {
+  background: var(--bronze-gradient);
+  color: #fff;
+  box-shadow: 0 0 20px var(--bronze-glow);
+}
+
+/* Corona para el primer puesto */
+.crown-icon {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.7));
+  animation: floatCrown 3s ease-in-out infinite;
+}
+
+@keyframes floatCrown {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6px); }
+}
+
+/* Avatar / Foto del ciclista */
+.photo-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 20px;
+}
+
+.first-place .photo-wrapper {
+  width: 170px;
+  height: 170px;
+}
+
+.photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.5s ease;
+  background-color: #1e293b;
+}
+
+.cyclist-card:hover .photo-wrapper img {
+  transform: scale(1.06);
+}
+
+.photo-halo {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  z-index: 0;
+  transition: var(--transition);
+}
+
+.first-place .photo-halo {
+  background: conic-gradient(from 0deg, #fbbf24, #f59e0b, #d97706, #fbbf24);
+  box-shadow: 0 0 30px var(--gold-glow);
+  animation: rotateHalo 6s linear infinite;
+}
+
+.second-place .photo-halo {
+  background: conic-gradient(from 0deg, #f1f5f9, #94a3b8, #cbd5e1, #f1f5f9);
+  box-shadow: 0 0 20px var(--silver-glow);
+}
+
+.third-place .photo-halo {
+  background: conic-gradient(from 0deg, #fdba74, #ea580c, #9a3412, #fdba74);
+  box-shadow: 0 0 20px var(--bronze-glow);
+}
+
+@keyframes rotateHalo {
+  100% { transform: rotate(360deg); }
+}
+
+/* Información del Ciclista */
+.cyclist-info {
+  text-align: center;
+  width: 100%;
+}
+
+.country-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.cyclist-name {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.first-place .cyclist-name {
+  font-size: 1.75rem;
+}
+
+.cyclist-team {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-accent);
+  margin-bottom: 14px;
+}
+
+.first-place .cyclist-team {
+  color: #fbbf24;
+}
+
+/* Pequeña Biografía */
+.bio-preview {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #cbd5e1;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid;
+}
+
+.first-place .bio-preview { border-color: var(--gold-primary); }
+.second-place .bio-preview { border-color: var(--silver-primary); }
+.third-place .bio-preview { border-color: var(--bronze-primary); }
+
+/* Estadísticas rápidas */
+.mini-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.stat-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Botón Ver Más */
+.btn-view-bio {
+  width: 100%;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.btn-view-bio:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   PEDESTALES DEL PODIO (BLOQUES FÍSICOS)
+   ========================================================================== */
+.podium-pedestal {
+  width: 100%;
+  border-radius: 16px 16px 4px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-top: 2px solid;
+  transition: var(--transition);
+}
+
+.first-place .podium-pedestal {
+  height: 190px;
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.22) 0%, rgba(18, 24, 38, 0.95) 100%);
+  border-color: #fbbf24;
+}
+
+.second-place .podium-pedestal {
+  height: 140px;
+  background: linear-gradient(180deg, rgba(148, 163, 184, 0.2) 0%, rgba(18, 24, 38, 0.95) 100%);
+  border-color: #cbd5e1;
+}
+
+.third-place .podium-pedestal {
+  height: 100px;
+  background: linear-gradient(180deg, rgba(180, 83, 9, 0.2) 0%, rgba(18, 24, 38, 0.95) 100%);
+  border-color: #f97316;
+}
+
+.pedestal-number {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.85;
+  user-select: none;
+}
+
+.first-place .pedestal-number {
+  color: #fbbf24;
+  text-shadow: 0 0 20px var(--gold-glow);
+}
+
+.second-place .pedestal-number {
+  color: #e2e8f0;
+  text-shadow: 0 0 15px var(--silver-glow);
+}
+
+.third-place .pedestal-number {
+  color: #fb923c;
+  text-shadow: 0 0 15px var(--bronze-glow);
+}
+
+.pedestal-text {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   MODAL DE BIOGRAFÍA COMPLETA
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 13, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: #141b2b;
+  border: 1px solid var(--border-glass-bright);
+  border-radius: var(--radius-lg);
+  max-width: 720px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8);
+  transform: translateY(20px) scale(0.96);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 32px;
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.modal-hero {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 24px;
+}
+
+.modal-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #38bdf8;
+  flex-shrink: 0;
+}
+
+.modal-title-area h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.modal-subtitle {
+  color: var(--text-accent);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.modal-body h3 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 20px 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-bio-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+.palmares-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.palmares-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid #fbbf24;
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   COMPARATIVA / SECCIÓN INFERIOR
+   ========================================================================== */
+.footer-notes {
+  margin-top: 40px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  border-top: 1px solid var(--border-glass);
+  padding-top: 24px;
+  width: 100%;
+  max-width: 800px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD
+   ========================================================================== */
+@media (max-width: 900px) {
+  .podium-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 30px;
+  }
+
+  .podium-column.first-place {
+    order: 1;
+  }
+  .podium-column.second-place {
+    order: 2;
+  }
+  .podium-column.third-place {
+    order: 3;
+  }
+
+  .podium-pedestal {
+    height: 70px !important;
+    border-radius: var(--radius-md);
+    flex-direction: row;
+    gap: 16px;
+    margin-top: -10px;
+  }
+
+  .pedestal-number {
+    font-size: 2.2rem;
+  }
+
+  .modal-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
